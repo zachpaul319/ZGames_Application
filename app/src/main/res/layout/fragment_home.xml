@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginBottom="631dp"
+            android:src="@drawable/logo_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/welcomeNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Welcome, ReallyLongName!"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <ImageButton
+            android:id="@+id/simonImageButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/simon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/updateAccountButton" />
+
+        <ImageButton
+            android:id="@+id/tasksImageButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="34dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/simon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deleteAccountButton" />
+
+        <ImageButton
+            android:id="@+id/wishImageButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="36dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/simon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <ImageButton
+            android:id="@+id/messageImageButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="32dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/simon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Simon"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/simonImageButton"
+            app:layout_constraintStart_toStartOf="@+id/simonImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/simonImageButton" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Tasks"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tasksImageButton"
+            app:layout_constraintStart_toStartOf="@+id/tasksImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/tasksImageButton" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Wishlist"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/wishImageButton"
+            app:layout_constraintStart_toStartOf="@+id/wishImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/wishImageButton" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Messages"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/messageImageButton"
+            app:layout_constraintStart_toStartOf="@+id/messageImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/messageImageButton" />
+
+        <Button
+            android:id="@+id/updateAccountButton"
+            android:layout_width="80dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="20dp"
+            android:text="Update Account"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="@+id/simonImageButton"
+            app:layout_constraintStart_toStartOf="@+id/simonImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeNameView" />
+
+        <Button
+            android:id="@+id/deleteAccountButton"
+            android:layout_width="80dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/purple_700"
+            android:text="Delete Account"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="@+id/tasksImageButton"
+            app:layout_constraintStart_toStartOf="@+id/tasksImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeNameView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SimonGameFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Simon"
+            android:textColor="@color/orange"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/highScoreViewGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="High Score: 0"
+            android:textColor="@color/purple_500"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <Button
+            android:id="@+id/redButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="52dp"
+            android:backgroundTint="@color/red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/highScoreViewGame" />
+
+        <Button
+            android:id="@+id/blueButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/greenButton"
+            app:layout_constraintTop_toBottomOf="@+id/yellowButton" />
+
+        <Button
+            android:id="@+id/greenButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="44dp"
+            android:backgroundTint="@color/green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/redButton" />
+
+        <Button
+            android:id="@+id/yellowButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/yellow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.545"
+            app:layout_constraintStart_toEndOf="@+id/redButton"
+            app:layout_constraintTop_toBottomOf="@+id/highScoreViewGame" />
+
+        <Button
+            android:id="@+id/simonGameSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Submit"
+            app:layout_constraintEnd_toEndOf="@+id/blueButton"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="@+id/greenButton"
+            app:layout_constraintTop_toBottomOf="@+id/greenButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

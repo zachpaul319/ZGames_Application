@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.zgames.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.zgames.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_simonHomeFragment"
+            app:destination="@id/simonHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/simonHomeFragment"
+        android:name="com.example.zgames.SimonHomeFragment"
+        android:label="fragment_simon_home"
+        tools:layout="@layout/fragment_simon_home" >
+        <action
+            android:id="@+id/action_simonHomeFragment_to_simonCountdownFragment"
+            app:destination="@id/simonCountdownFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/simonGameFragment"
+        android:name="com.example.zgames.SimonGameFragment"
+        android:label="fragment_simon_game"
+        tools:layout="@layout/fragment_simon_game" />
+    <fragment
+        android:id="@+id/simonCountdownFragment"
+        android:name="com.example.zgames.SimonCountdownFragment"
+        android:label="fragment_simon_countdown"
+        tools:layout="@layout/fragment_simon_countdown" >
+        <action
+            android:id="@+id/action_simonCountdownFragment_to_simonGameFragment"
+            app:destination="@id/simonGameFragment" />
+    </fragment>
+</navigation>
