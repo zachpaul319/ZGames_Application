@@ -121,7 +121,7 @@ public class SimonGameFragment extends Fragment {
         return view;
     }
 
-    private boolean isCorrect() {
+    private boolean isCorrectSequence() {
         return userSequence.equals(piSequence);
     }
 
@@ -129,7 +129,7 @@ public class SimonGameFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isCorrect()) {
+                if (isCorrectSequence()) {
                     Toaster.showToast(getContext(), "Correct!");
                     removeColorButtonCLickListeners();
                     removeSubmitButtonClickListener();
