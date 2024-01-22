@@ -46,35 +46,35 @@
             app:layout_constraintTop_toBottomOf="@+id/updateAccountButton" />
 
         <ImageButton
-            android:id="@+id/tasksImageButton"
+            android:id="@+id/rpsImageButton"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="60dp"
             android:layout_marginEnd="34dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/simon"
+            android:src="@drawable/rps"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deleteAccountButton" />
 
         <ImageButton
-            android:id="@+id/wishImageButton"
+            android:id="@+id/wordleImageButton"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="36dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/simon"
+            android:src="@drawable/wordle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <ImageButton
-            android:id="@+id/messageImageButton"
+            android:id="@+id/threeThirteenImageButton"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="32dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/simon"
+            android:src="@drawable/threethirteen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -95,41 +95,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Tasks"
+            android:text="Rock, Paper, Scissors"
             android:textColor="@color/orange"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/tasksImageButton"
-            app:layout_constraintStart_toStartOf="@+id/tasksImageButton"
-            app:layout_constraintTop_toBottomOf="@+id/tasksImageButton" />
+            app:layout_constraintEnd_toEndOf="@+id/rpsImageButton"
+            app:layout_constraintStart_toStartOf="@+id/rpsImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/rpsImageButton" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Wishlist"
+            android:text="Wordle"
             android:textColor="@color/orange"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/wishImageButton"
-            app:layout_constraintStart_toStartOf="@+id/wishImageButton"
-            app:layout_constraintTop_toBottomOf="@+id/wishImageButton" />
+            app:layout_constraintEnd_toEndOf="@+id/wordleImageButton"
+            app:layout_constraintStart_toStartOf="@+id/wordleImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/wordleImageButton" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Messages"
+            android:text="3-13"
             android:textColor="@color/orange"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/messageImageButton"
-            app:layout_constraintStart_toStartOf="@+id/messageImageButton"
-            app:layout_constraintTop_toBottomOf="@+id/messageImageButton" />
+            app:layout_constraintEnd_toEndOf="@+id/threeThirteenImageButton"
+            app:layout_constraintStart_toStartOf="@+id/threeThirteenImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/threeThirteenImageButton" />
 
         <Button
             android:id="@+id/updateAccountButton"
             android:layout_width="80dp"
-            android:layout_height="38dp"
+            android:layout_height="42dp"
             android:layout_marginTop="20dp"
             android:text="Update Account"
             android:textSize="8sp"
@@ -140,13 +140,13 @@
         <Button
             android:id="@+id/deleteAccountButton"
             android:layout_width="80dp"
-            android:layout_height="38dp"
+            android:layout_height="42dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/purple_700"
             android:text="Delete Account"
             android:textSize="8sp"
-            app:layout_constraintEnd_toEndOf="@+id/tasksImageButton"
-            app:layout_constraintStart_toStartOf="@+id/tasksImageButton"
+            app:layout_constraintEnd_toEndOf="@+id/rpsImageButton"
+            app:layout_constraintStart_toStartOf="@+id/rpsImageButton"
             app:layout_constraintTop_toBottomOf="@+id/welcomeNameView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

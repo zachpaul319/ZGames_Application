@@ -18,13 +18,13 @@ import com.example.zgames.types.User;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
+ * Use the {@link SignupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment {
+public class SignupFragment extends Fragment {
+    Button submitButton;
     EditText[] fields;
-    Button loginButton, signUpButton;
-    String username, password;
+    String username, displayName, password;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LoginFragment() {
+    public SignupFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +45,11 @@ public class LoginFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LoginFragment.
+     * @return A new instance of fragment SignupFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
+    public static SignupFragment newInstance(String param1, String param2) {
+        SignupFragment fragment = new SignupFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,45 +70,44 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        fields = new EditText[2];
-        fields[0] = view.findViewById(R.id.usernameField);
-        fields[1] = view.findViewById(R.id.passwordField);
+        View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        loginButton = view.findViewById(R.id.loginButton);
-        signUpButton = view.findViewById(R.id.signUpButton);
+        fields = new EditText[3];
+        fields[0] = view.findViewById(R.id.SUusernameField);
+        fields[1] = view.findViewById(R.id.SUdisplayNameField);
+        fields[2] = view.findViewById(R.id.SUpasswordField);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        submitButton = view.findViewById(R.id.submitSignupButton);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (FieldChecker.allFieldsFilledOut(fields)) {
                     username = fields[0].getText().toString();
-                    password = fields[1].getText().toString();
+                    displayName = fields[1].getText().toString();
+                    password = fields[2].getText().toString();
 
-                    (new UserModel()).getUserByAuth(getContext(), username, password, new UserModel.GetUserResponseHandler() {
+                    User newUser = new User(username, displayName, password);
+                    (new UserModel()).createUser(getContext(), newUser, new UserModel.CreateUserResponseHandler() {
                         @Override
-                        public void response(User user) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable("user", user);
-                            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_homeFragment, bundle);
+                        public void response(int status) {
+                            if (status == 1) {
+                                Toaster.showToast(getContext(), "Username already taken");
+                            } else {
+                                Navigation.findNavController(view).popBackStack();
+                                Toaster.showToast(getContext(), "Account Created. Please Login");
+                            }
                         }
 
                         @Override
                         public void error() {
-                            Toaster.showToast(getContext(), "Invalid Login");
+                            Toaster.showGeneralErrorToast(getContext());
                         }
                     });
                 } else {
                     FieldChecker.changeBorderColors(fields);
                     FieldChecker.showIncompleteFieldsToast(getContext());
                 }
-            }
-        });
-
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signupFragment);
             }
         });
 

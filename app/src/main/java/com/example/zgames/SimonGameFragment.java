@@ -138,6 +138,11 @@ public class SimonGameFragment extends Fragment {
 
                     currentScore++;
 
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Sequence sequence = new Sequence(piSequence);
                     (new SimonModel()).sendSequence(getContext(), sequence, new SimonModel.SequenceResponseHandler() {
                         @Override
