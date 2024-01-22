@@ -25,6 +25,15 @@
         <action
             android:id="@+id/action_homeFragment_to_simonHomeFragment"
             app:destination="@id/simonHomeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_RPSHomeFragment"
+            app:destination="@id/RPSHomeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_wordleHomeFragment"
+            app:destination="@id/wordleHomeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_threeThirteenHomeFragment"
+            app:destination="@id/threeThirteenHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/simonHomeFragment"
@@ -54,4 +63,19 @@
         android:name="com.example.zgames.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" />
+    <fragment
+        android:id="@+id/RPSHomeFragment"
+        android:name="com.example.zgames.RPSHomeFragment"
+        android:label="fragment_rps_home"
+        tools:layout="@layout/fragment_rps_home" />
+    <fragment
+        android:id="@+id/wordleHomeFragment"
+        android:name="com.example.zgames.WordleHomeFragment"
+        android:label="fragment_wordle_home"
+        tools:layout="@layout/fragment_wordle_home" />
+    <fragment
+        android:id="@+id/threeThirteenHomeFragment"
+        android:name="com.example.zgames.ThreeThirteenHomeFragment"
+        android:label="fragment_three_thirteen_home"
+        tools:layout="@layout/fragment_three_thirteen_home" />
 </navigation>

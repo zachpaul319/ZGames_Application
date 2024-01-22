@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.zgames.model.RPSModel;
 import com.example.zgames.model.SimonModel;
 import com.example.zgames.tools.Toaster;
+import com.example.zgames.types.RPSPlayer;
 import com.example.zgames.types.SimonPlayer;
 import com.example.zgames.types.User;
 
@@ -24,7 +26,7 @@ import com.example.zgames.types.User;
  */
 public class HomeFragment extends Fragment {
     Button updateAccountButton, deleteAccountButton;
-    ImageButton simonButton;
+    ImageButton simonButton, rpsButton, wordleButton, threeThirteenButton;
     String displayName;
     TextView welcomeNameView;
     User user;
@@ -100,6 +102,27 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
+
+        rpsButton = view.findViewById(R.id.rpsImageButton);
+        rpsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                (new RPSModel()).getPlayer(getContext(), user.userId, new RPSModel.GetPlayerResponseHandler() {
+                    @Override
+                    public void response(RPSPlayer player) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("player", player);
+                        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_RPSHomeFragment, bundle);
+                    }
+
+                    @Override
+                    public void error() {
+                        Toaster.showGeneralErrorToast(getContext());
+                    }
+                });
+            }
+        });
+
         return view;
     }
 }
