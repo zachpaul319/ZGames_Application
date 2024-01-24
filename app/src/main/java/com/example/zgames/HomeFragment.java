@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.example.zgames.model.RPSModel;
 import com.example.zgames.model.SimonModel;
+import com.example.zgames.model.WordleModel;
 import com.example.zgames.tools.Toaster;
 import com.example.zgames.types.RPSPlayer;
 import com.example.zgames.types.SimonPlayer;
 import com.example.zgames.types.User;
+import com.example.zgames.types.WordlePlayer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +29,7 @@ import com.example.zgames.types.User;
 public class HomeFragment extends Fragment {
     Button updateAccountButton, deleteAccountButton;
     ImageButton simonButton, rpsButton, wordleButton, threeThirteenButton;
+    int userId;
     String displayName;
     TextView welcomeNameView;
     User user;
@@ -79,6 +82,7 @@ public class HomeFragment extends Fragment {
         assert getArguments() != null;
         user = getArguments().getParcelable("user");
         displayName = user.displayName;
+        userId = user.userId;
 
         welcomeNameView = view.findViewById(R.id.welcomeNameView);
         welcomeNameView.setText(String.format("Welcome, %s!", displayName));
@@ -87,7 +91,7 @@ public class HomeFragment extends Fragment {
         simonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (new SimonModel()).getPlayer(getContext(), user.userId, new SimonModel.GetPlayerResponseHandler() {
+                (new SimonModel()).getPlayer(getContext(), userId, new SimonModel.GetPlayerResponseHandler() {
                     @Override
                     public void response(SimonPlayer player) {
                         Bundle bundle = new Bundle();
@@ -107,12 +111,32 @@ public class HomeFragment extends Fragment {
         rpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (new RPSModel()).getPlayer(getContext(), user.userId, new RPSModel.GetPlayerResponseHandler() {
+                (new RPSModel()).getPlayer(getContext(), userId, new RPSModel.GetPlayerResponseHandler() {
                     @Override
                     public void response(RPSPlayer player) {
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("player", player);
                         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_RPSHomeFragment, bundle);
+                    }
+
+                    @Override
+                    public void error() {
+                        Toaster.showGeneralErrorToast(getContext());
+                    }
+                });
+            }
+        });
+
+        wordleButton = view.findViewById(R.id.wordleImageButton);
+        wordleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                (new WordleModel()).getPlayer(getContext(), userId, new WordleModel.GetPlayerResponseHandler() {
+                    @Override
+                    public void response(WordlePlayer player) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("player", player);
+                        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_wordleHomeFragment, bundle);
                     }
 
                     @Override
