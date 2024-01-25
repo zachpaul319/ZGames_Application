@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,7 +110,7 @@ public class SimonGameFragment extends Fragment {
             public void response(List<String> sequence) {
                 piSequence = sequence;
                 setColorButtonClickListeners();
-                setSubmitButtonClickListener();
+                setSubmitButtonClickListener(view);
             }
 
             @Override
@@ -125,7 +126,7 @@ public class SimonGameFragment extends Fragment {
         return userSequence.equals(piSequence);
     }
 
-    private void setSubmitButtonClickListener() {
+    private void setSubmitButtonClickListener(View view) {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,17 +140,18 @@ public class SimonGameFragment extends Fragment {
                     currentScore++;
 
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     Sequence sequence = new Sequence(piSequence);
                     (new SimonModel()).sendSequence(getContext(), sequence, new SimonModel.SequenceResponseHandler() {
                         @Override
                         public void response(List<String> sequence) {
                             piSequence = sequence;
                             setColorButtonClickListeners();
-                            setSubmitButtonClickListener();
+                            setSubmitButtonClickListener(view);
                         }
 
                         @Override
@@ -158,10 +160,15 @@ public class SimonGameFragment extends Fragment {
                         }
                     });
                 } else {
+                    Bundle bundle = new Bundle();
+
                     if (currentScore > highScore) {
                         (new SimonModel()).updateScore(getContext(), player.simonId, currentScore, new SimonModel.UpdateScoreResponseHandler() {
                             @Override
                             public void response() {
+                                player.highScore = currentScore;
+                                bundle.putParcelable("player", player);
+                                Navigation.findNavController(view).navigate(R.id.action_simonGameFragment_to_simonGameOverFragment, bundle);
                                 Toaster.showToast(getContext(), String.format("New High Score: %d", currentScore));
                             }
 
@@ -171,7 +178,9 @@ public class SimonGameFragment extends Fragment {
                             }
                         });
                     } else {
-                        Toaster.showToast(getContext(), String.format("Score: %d", currentScore));
+                        bundle.putParcelable("player", player);
+                        Navigation.findNavController(view).navigate(R.id.action_simonGameFragment_to_simonGameOverFragment, bundle);
+                        Toaster.showToast(getContext(), String.format("Your Score: %d", currentScore));
                     }
                 }
             }

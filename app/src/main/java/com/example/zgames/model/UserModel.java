@@ -1,5 +1,6 @@
 package com.example.zgames.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -41,6 +42,22 @@ public class UserModel {
         });
         AuthRequest.username = username;
         AuthRequest.password = password;
+        ServiceClient.sendRequest(ctx, jsonObjectRequest);
+    }
+
+    public void getUserById(Context ctx, int userId, GetUserResponseHandler handler) {
+        @SuppressLint("DefaultLocale") JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_user/%d", BASE_URL, userId), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                User user = JsonConverter.deserialize(response, "data", User.class);
+                handler.response(user);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                handler.error();
+            }
+        });
         ServiceClient.sendRequest(ctx, jsonObjectRequest);
     }
 

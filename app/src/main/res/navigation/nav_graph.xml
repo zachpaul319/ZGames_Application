@@ -48,7 +48,11 @@
         android:id="@+id/simonGameFragment"
         android:name="com.example.zgames.SimonGameFragment"
         android:label="fragment_simon_game"
-        tools:layout="@layout/fragment_simon_game" />
+        tools:layout="@layout/fragment_simon_game" >
+        <action
+            android:id="@+id/action_simonGameFragment_to_simonGameOverFragment"
+            app:destination="@id/simonGameOverFragment" />
+    </fragment>
     <fragment
         android:id="@+id/simonCountdownFragment"
         android:name="com.example.zgames.SimonCountdownFragment"
@@ -78,4 +82,16 @@
         android:name="com.example.zgames.ThreeThirteenHomeFragment"
         android:label="fragment_three_thirteen_home"
         tools:layout="@layout/fragment_three_thirteen_home" />
+    <fragment
+        android:id="@+id/simonGameOverFragment"
+        android:name="com.example.zgames.SimonGameOverFragment"
+        android:label="fragment_simon_game_over"
+        tools:layout="@layout/fragment_simon_game_over" >
+        <action
+            android:id="@+id/action_simonGameOverFragment_to_simonCountdownFragment"
+            app:destination="@id/simonCountdownFragment" />
+        <action
+            android:id="@+id/action_simonGameOverFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
