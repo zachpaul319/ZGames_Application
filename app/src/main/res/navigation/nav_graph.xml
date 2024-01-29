@@ -76,7 +76,11 @@
         android:id="@+id/wordleHomeFragment"
         android:name="com.example.zgames.WordleHomeFragment"
         android:label="fragment_wordle_home"
-        tools:layout="@layout/fragment_wordle_home" />
+        tools:layout="@layout/fragment_wordle_home" >
+        <action
+            android:id="@+id/action_wordleHomeFragment_to_wordleGameFragment"
+            app:destination="@id/wordleGameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/threeThirteenHomeFragment"
         android:name="com.example.zgames.ThreeThirteenHomeFragment"
@@ -94,4 +98,9 @@
             android:id="@+id/action_simonGameOverFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/wordleGameFragment"
+        android:name="com.example.zgames.WordleGameFragment"
+        android:label="fragment_wordle_game"
+        tools:layout="@layout/fragment_wordle_game" />
 </navigation>

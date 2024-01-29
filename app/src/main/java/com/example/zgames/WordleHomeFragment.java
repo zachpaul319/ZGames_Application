@@ -3,6 +3,7 @@ package com.example.zgames;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,14 @@ public class WordleHomeFragment extends Fragment {
         currentLevelView.setText(String.format("Current Level: %d", currentLevel));
 
         wordlePlayButton = view.findViewById(R.id.wordlePlayButton);
+        wordlePlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("player", player);
+                Navigation.findNavController(view).navigate(R.id.action_wordleHomeFragment_to_wordleGameFragment, bundle);
+            }
+        });
 
         return view;
     }
