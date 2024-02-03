@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".WordleGameFragment">
 
+    <TextView
+        android:id="@+id/currentLevelViewGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Level 1"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:paddingTop="36dp"/>
+
     <GridLayout
         android:id="@+id/wordleGridLayout"
         android:layout_width="match_parent"
@@ -14,5 +24,14 @@
         android:layout_gravity="center">
     </GridLayout>
 
+    <Button
+        android:id="@+id/wordleGameSubmitButton"
+        android:backgroundTint="@color/green"
+        android:layout_width="117dp"
+        android:layout_height="59dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="36dp"
+        android:text="Submit"
+        android:textSize="18sp"/>
 
 </FrameLayout>

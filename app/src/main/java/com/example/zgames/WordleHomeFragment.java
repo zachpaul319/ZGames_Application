@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zgames.model.WordleModel;
+import com.example.zgames.tools.Toaster;
 import com.example.zgames.types.WordlePlayer;
 
 /**
@@ -80,9 +82,20 @@ public class WordleHomeFragment extends Fragment {
         wordlePlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("player", player);
-                Navigation.findNavController(view).navigate(R.id.action_wordleHomeFragment_to_wordleGameFragment, bundle);
+                (new WordleModel()).getWord(getContext(), player.wordleId, currentLevel, new WordleModel.GetWordResponseHandler() {
+                    @Override
+                    public void response(String word) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("player", player);
+                        bundle.putString("word", word);
+                        Navigation.findNavController(view).navigate(R.id.action_wordleHomeFragment_to_wordleGameFragment, bundle);
+                    }
+
+                    @Override
+                    public void error() {
+                        Toaster.showGeneralErrorToast(getContext());
+                    }
+                });
             }
         });
 

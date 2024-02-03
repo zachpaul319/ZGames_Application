@@ -84,8 +84,8 @@ public class LoginFragment extends Fragment {
                 if (FieldChecker.allFieldsFilledOut(fields)) {
                     username = fields[0].getText().toString();
                     password = fields[1].getText().toString();
-
-                    (new UserModel()).getUserByAuth(getContext(), username, password, new UserModel.GetUserResponseHandler() {
+                    // TODO: CHANGE ME
+                    (new UserModel()).getUserByAuth(getContext(), "zpaul20", "s3cr3t", new UserModel.GetUserResponseHandler() {
                         @Override
                         public void response(User user) {
                             Bundle bundle = new Bundle();

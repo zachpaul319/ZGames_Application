@@ -12,13 +12,17 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.example.zgames.types.WordlePlayer;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WordleGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class WordleGameFragment extends Fragment {
-    private GridLayout wordleGridLayout;
+    GridLayout wordleGridLayout;
+    String word;
+    WordlePlayer player;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,6 +69,10 @@ public class WordleGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wordle_game, container, false);
+        assert getArguments() != null;
+        player = getArguments().getParcelable("player");
+        word = getArguments().getString("word");
+
         wordleGridLayout = view.findViewById(R.id.wordleGridLayout);
         addTilesToGrid();
 
