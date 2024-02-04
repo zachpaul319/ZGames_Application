@@ -1,5 +1,6 @@
 package com.example.zgames;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,7 +23,6 @@ import com.example.zgames.types.WordlePlayer;
  */
 public class WordleHomeFragment extends Fragment {
     Button wordlePlayButton;
-    int currentLevel;
     TextView currentLevelView;
     WordlePlayer player;
 
@@ -66,6 +66,7 @@ public class WordleHomeFragment extends Fragment {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,16 +74,15 @@ public class WordleHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wordle_home, container, false);
         assert getArguments() != null;
         player = getArguments().getParcelable("player");
-        currentLevel = player.currentLevel;
 
         currentLevelView = view.findViewById(R.id.currentLevelViewHome);
-        currentLevelView.setText(String.format("Current Level: %d", currentLevel));
+        currentLevelView.setText(String.format("Current Level: %d", player.currentLevel));
 
         wordlePlayButton = view.findViewById(R.id.wordlePlayButton);
         wordlePlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (new WordleModel()).getWord(getContext(), player.wordleId, currentLevel, new WordleModel.GetWordResponseHandler() {
+                (new WordleModel()).getWord(getContext(), player.wordleId, new WordleModel.GetWordResponseHandler() {
                     @Override
                     public void response(String word) {
                         Bundle bundle = new Bundle();
