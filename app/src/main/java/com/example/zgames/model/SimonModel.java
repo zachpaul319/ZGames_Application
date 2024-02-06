@@ -38,10 +38,8 @@ public class SimonModel {
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
-    public void sendSequence(Context ctx, Sequence sequence, SequenceResponseHandler handler) {
-        JSONObject jsonObject = JsonConverter.serialize(sequence);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/flash_sequence", BASE_URL), jsonObject, new Response.Listener<JSONObject>() {
+    public void startNewGame(Context ctx, SequenceResponseHandler handler) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/new_game", BASE_URL), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<String> sequence = JsonConverter.deserializeList(response, "sequence", String[].class);
@@ -57,8 +55,10 @@ public class SimonModel {
         ServiceClient.sendRequest(ctx, jsonObjectRequest);
     }
 
-    public void startNewGame(Context ctx, SequenceResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/new_game", BASE_URL), null, new Response.Listener<JSONObject>() {
+    public void sendSequence(Context ctx, Sequence sequence, SequenceResponseHandler handler) {
+        JSONObject jsonObject = JsonConverter.serialize(sequence);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/flash_sequence", BASE_URL), jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<String> sequence = JsonConverter.deserializeList(response, "sequence", String[].class);

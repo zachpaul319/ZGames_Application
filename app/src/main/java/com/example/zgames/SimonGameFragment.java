@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zgames.games.Simon;
 import com.example.zgames.model.SimonModel;
 import com.example.zgames.tools.Toaster;
 import com.example.zgames.types.Sequence;
@@ -28,10 +29,6 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class SimonGameFragment extends Fragment {
-    Button redButton, yellowButton, greenButton, blueButton, submitButton;
-    HashMap<Button, String> colorButtonsMap;
-    int currentScore, highScore;
-    List<String> piSequence, userSequence;
     SimonPlayer player;
     TextView highScoreView;
 
@@ -83,131 +80,14 @@ public class SimonGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_simon_game, container, false);
         assert getArguments() != null;
         player = getArguments().getParcelable("player");
-        highScore = player.highScore;
 
         highScoreView = view.findViewById(R.id.highScoreViewGame);
-        highScoreView.setText(String.format("High Score: %d", highScore));
+        highScoreView.setText(String.format("High Score: %d", player.highScore));
 
-        submitButton = view.findViewById(R.id.simonGameSubmitButton);
+        Simon simon = new Simon(getContext(), view, player);
 
-        redButton = view.findViewById(R.id.redButton);
-        yellowButton = view.findViewById(R.id.yellowButton);
-        greenButton = view.findViewById(R.id.greenButton);
-        blueButton = view.findViewById(R.id.blueButton);
-
-        colorButtonsMap = new HashMap<Button, String>();
-        colorButtonsMap.put(redButton, "red");
-        colorButtonsMap.put(yellowButton, "yellow");
-        colorButtonsMap.put(greenButton, "green");
-        colorButtonsMap.put(blueButton, "blue");
-
-        userSequence = new ArrayList<>();
-
-        currentScore = 0;
-
-        (new SimonModel()).startNewGame(getContext(), new SimonModel.SequenceResponseHandler() {
-            @Override
-            public void response(List<String> sequence) {
-                piSequence = sequence;
-                setColorButtonClickListeners();
-                setSubmitButtonClickListener(view);
-            }
-
-            @Override
-            public void error() {
-                Toaster.showGeneralErrorToast(getContext());
-            }
-        });
+        simon.startGame();
 
         return view;
-    }
-
-    private boolean isCorrectSequence() {
-        return userSequence.equals(piSequence);
-    }
-
-    private void setSubmitButtonClickListener(View view) {
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isCorrectSequence()) {
-                    Toaster.showToast(getContext(), "Correct!");
-                    removeColorButtonCLickListeners();
-                    removeSubmitButtonClickListener();
-
-                    userSequence.clear();
-
-                    currentScore++;
-
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    Sequence sequence = new Sequence(piSequence);
-                    (new SimonModel()).sendSequence(getContext(), sequence, new SimonModel.SequenceResponseHandler() {
-                        @Override
-                        public void response(List<String> sequence) {
-                            piSequence = sequence;
-                            setColorButtonClickListeners();
-                            setSubmitButtonClickListener(view);
-                        }
-
-                        @Override
-                        public void error() {
-                            Toaster.showGeneralErrorToast(getContext());
-                        }
-                    });
-                } else {
-                    Bundle bundle = new Bundle();
-
-                    if (currentScore > highScore) {
-                        (new SimonModel()).updateScore(getContext(), player.simonId, currentScore, new SimonModel.UpdateScoreResponseHandler() {
-                            @Override
-                            public void response() {
-                                player.highScore = currentScore;
-                                bundle.putParcelable("player", player);
-                                Navigation.findNavController(view).navigate(R.id.action_simonGameFragment_to_simonGameOverFragment, bundle);
-                                Toaster.showToast(getContext(), String.format("New High Score: %d", currentScore));
-                            }
-
-                            @Override
-                            public void error() {
-                                Toaster.showGeneralErrorToast(getContext());
-                            }
-                        });
-                    } else {
-                        bundle.putParcelable("player", player);
-                        Navigation.findNavController(view).navigate(R.id.action_simonGameFragment_to_simonGameOverFragment, bundle);
-                        Toaster.showToast(getContext(), String.format("Your Score: %d", currentScore));
-                    }
-                }
-            }
-        });
-    }
-
-    private void removeSubmitButtonClickListener() {
-        submitButton.setOnClickListener(null);
-    }
-
-    private void setColorButtonClickListeners() {
-        for (Map.Entry<Button, String> buttonStringEntry : colorButtonsMap.entrySet()) {
-            Button button = buttonStringEntry.getKey();
-            String color = buttonStringEntry.getValue();
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    userSequence.add(color);
-                }
-            });
-        }
-    }
-
-    private void removeColorButtonCLickListeners() {
-        for (Map.Entry<Button, String> buttonStringEntry : colorButtonsMap.entrySet()) {
-            Button button = buttonStringEntry.getKey();
-            button.setOnClickListener(null);
-        }
     }
 }
