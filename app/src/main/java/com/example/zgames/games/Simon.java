@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Simon {
+public class Simon implements Game {
     private final Button submitButton;
     private final HashMap<Button, String> colorButtonsMap;
     private final Context context;
