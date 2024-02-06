@@ -1,5 +1,7 @@
 package com.example.zgames;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.zgames.model.RPSModel;
 import com.example.zgames.model.SimonModel;
+import com.example.zgames.model.UserModel;
 import com.example.zgames.model.WordleModel;
 import com.example.zgames.tools.Toaster;
 import com.example.zgames.types.RPSPlayer;
@@ -29,8 +32,6 @@ import com.example.zgames.types.WordlePlayer;
 public class HomeFragment extends Fragment {
     Button updateAccountButton, deleteAccountButton;
     ImageButton simonButton, rpsButton, wordleButton, threeThirteenButton;
-    int userId;
-    String displayName;
     TextView welcomeNameView;
     User user;
 
@@ -81,17 +82,50 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         assert getArguments() != null;
         user = getArguments().getParcelable("user");
-        displayName = user.displayName;
-        userId = user.userId;
 
         welcomeNameView = view.findViewById(R.id.welcomeNameView);
-        welcomeNameView.setText(String.format("Welcome, %s!", displayName));
+        welcomeNameView.setText(String.format("Welcome, %s!", user.displayName));
+
+        deleteAccountButton = view.findViewById(R.id.deleteAccountButton);
+        deleteAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Delete Account");
+                builder.setMessage("Are you sure you want to delete your account?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        (new UserModel()).deleteUser(getContext(), user.userId, new UserModel.DeleteUserResponseHandler() {
+                            @Override
+                            public void response() {
+                                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment);
+                                Toaster.showToast(getContext(), "Account Deleted");
+                            }
+
+                            @Override
+                            public void error() {
+                                Toaster.showGeneralErrorToast(getContext());
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         simonButton = view.findViewById(R.id.simonImageButton);
         simonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (new SimonModel()).getPlayer(getContext(), userId, new SimonModel.GetPlayerResponseHandler() {
+                (new SimonModel()).getPlayer(getContext(), user.userId, new SimonModel.GetPlayerResponseHandler() {
                     @Override
                     public void response(SimonPlayer player) {
                         Bundle bundle = new Bundle();
@@ -111,7 +145,7 @@ public class HomeFragment extends Fragment {
         rpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (new RPSModel()).getPlayer(getContext(), userId, new RPSModel.GetPlayerResponseHandler() {
+                (new RPSModel()).getPlayer(getContext(), user.userId, new RPSModel.GetPlayerResponseHandler() {
                     @Override
                     public void response(RPSPlayer player) {
                         Bundle bundle = new Bundle();
@@ -131,7 +165,7 @@ public class HomeFragment extends Fragment {
         wordleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (new WordleModel()).getPlayer(getContext(), userId, new WordleModel.GetPlayerResponseHandler() {
+                (new WordleModel()).getPlayer(getContext(), user.userId, new WordleModel.GetPlayerResponseHandler() {
                     @Override
                     public void response(WordlePlayer player) {
                         Bundle bundle = new Bundle();

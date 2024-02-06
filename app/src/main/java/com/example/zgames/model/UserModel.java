@@ -25,6 +25,11 @@ public class UserModel extends BaseModel {
         void error();
     }
 
+    public interface DeleteUserResponseHandler {
+        void response();
+        void error();
+    }
+
     private final String ROUTED_URL = String.format("%s/zgames/users", BASE_URL);
 
     public void getUserByAuth(Context ctx, String username, String password, GetUserResponseHandler handler) {
@@ -69,6 +74,21 @@ public class UserModel extends BaseModel {
             public void onResponse(JSONObject response) {
                 int status = JsonConverter.deserialize(response, "status", Integer.class);
                 handler.response(status);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                handler.error();
+            }
+        });
+        ServiceClient.sendRequest(ctx, jsonObjectRequest);
+    }
+
+    public void deleteUser(Context ctx, int userId, DeleteUserResponseHandler handler) {
+        @SuppressLint("DefaultLocale") JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, String.format("%s/delete_user/%d", ROUTED_URL, userId), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                handler.response();
             }
         }, new Response.ErrorListener() {
             @Override
