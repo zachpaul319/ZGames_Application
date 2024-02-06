@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class SimonModel {
+public class SimonModel extends BaseModel {
     public interface SequenceResponseHandler {
         void response(List<String> sequence);
         void error();
@@ -32,14 +32,14 @@ public class SimonModel {
         void error();
     }
 
-    private final String BASE_URL = "http://192.168.0.72:8000/zgames/simon";
+    private final String ROUTED_URL = String.format("%s/zgames/simon", BASE_URL);
 
     private void setRetryPolicy(JsonObjectRequest jsonObjectRequest) {
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     public void startNewGame(Context ctx, SequenceResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/new_game", BASE_URL), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/new_game", ROUTED_URL), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<String> sequence = JsonConverter.deserializeList(response, "sequence", String[].class);
@@ -58,7 +58,7 @@ public class SimonModel {
     public void sendSequence(Context ctx, Sequence sequence, SequenceResponseHandler handler) {
         JSONObject jsonObject = JsonConverter.serialize(sequence);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/flash_sequence", BASE_URL), jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/flash_sequence", ROUTED_URL), jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<String> sequence = JsonConverter.deserializeList(response, "sequence", String[].class);
@@ -75,7 +75,7 @@ public class SimonModel {
     }
 
     public void getPlayer(Context ctx, int userId, GetPlayerResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_player/%d", BASE_URL, userId), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_player/%d", ROUTED_URL, userId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 SimonPlayer player = JsonConverter.deserialize(response, "data", SimonPlayer.class);
@@ -91,7 +91,7 @@ public class SimonModel {
     }
 
     public void updateScore(Context ctx, int simonId, int highScore, UpdateScoreResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, String.format("%s/update_score/%d?highScore=%d", BASE_URL, simonId, highScore), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, String.format("%s/update_score/%d?highScore=%d", ROUTED_URL, simonId, highScore), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 handler.response();

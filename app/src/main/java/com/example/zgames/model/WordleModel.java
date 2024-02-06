@@ -12,7 +12,7 @@ import com.example.zgames.types.WordlePlayer;
 
 import org.json.JSONObject;
 
-public class WordleModel {
+public class WordleModel extends BaseModel {
     public interface GetPlayerResponseHandler {
         void response(WordlePlayer player);
         void error();
@@ -28,10 +28,10 @@ public class WordleModel {
         void error();
     }
 
-    private final String BASE_URL = "http://192.168.0.72:8000/zgames/wordle";
+    private final String ROUTED_URL = String.format("%s/zgames/wordle", BASE_URL);
 
     public void getPlayer(Context ctx, int userId, GetPlayerResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_player/%d", BASE_URL, userId), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_player/%d", ROUTED_URL, userId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 WordlePlayer player = JsonConverter.deserialize(response, "data", WordlePlayer.class);
@@ -47,7 +47,7 @@ public class WordleModel {
     }
 
     public void getWord(Context ctx, int wordleId, GetWordResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_word/%d", BASE_URL, wordleId), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_word/%d", ROUTED_URL, wordleId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String word = JsonConverter.deserialize(response, "data", String.class);
@@ -63,7 +63,7 @@ public class WordleModel {
     }
 
     public void advanceLevel(Context ctx, int wordleId, AdvanceLevelResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, String.format("%s/advance/%d", BASE_URL, wordleId), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, String.format("%s/advance/%d", ROUTED_URL, wordleId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 handler.response();

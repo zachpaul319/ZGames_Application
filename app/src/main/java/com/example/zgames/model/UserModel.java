@@ -14,7 +14,7 @@ import com.example.zgames.types.User;
 
 import org.json.JSONObject;
 
-public class UserModel {
+public class UserModel extends BaseModel {
     public interface GetUserResponseHandler {
         void response(User user);
         void error();
@@ -25,10 +25,10 @@ public class UserModel {
         void error();
     }
 
-    private final String BASE_URL = "http://192.168.0.72:8000/zgames/users";
+    private final String ROUTED_URL = String.format("%s/zgames/users", BASE_URL);
 
     public void getUserByAuth(Context ctx, String username, String password, GetUserResponseHandler handler) {
-        JsonObjectRequest jsonObjectRequest = new AuthRequest(Request.Method.GET, String.format("%s/get_user", BASE_URL), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new AuthRequest(Request.Method.GET, String.format("%s/get_user", ROUTED_URL), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 User user = JsonConverter.deserialize(response, "data", User.class);
@@ -46,7 +46,7 @@ public class UserModel {
     }
 
     public void getUserById(Context ctx, int userId, GetUserResponseHandler handler) {
-        @SuppressLint("DefaultLocale") JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_user/%d", BASE_URL, userId), null, new Response.Listener<JSONObject>() {
+        @SuppressLint("DefaultLocale") JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, String.format("%s/get_user/%d", ROUTED_URL, userId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 User user = JsonConverter.deserialize(response, "data", User.class);
@@ -64,7 +64,7 @@ public class UserModel {
     public void createUser(Context ctx, User user, CreateUserResponseHandler handler) {
         JSONObject jsonObject = JsonConverter.serialize(user);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/create_user", BASE_URL), jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, String.format("%s/create_user", ROUTED_URL), jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 int status = JsonConverter.deserialize(response, "status", Integer.class);
